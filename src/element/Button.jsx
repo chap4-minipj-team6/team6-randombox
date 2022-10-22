@@ -11,24 +11,27 @@ const Button = (props) => {
 export default Button;
 
 const StButton = styled.button`
-  margin: 0;
+  border-radius: 20px;
   border: none;
-  cursor: pointer;
-  font-family: 'ghanachoco';
-  font-size: var(--button-font-size, 1rem);
-  //padding: var(--button-padding, 12px 16px);
-  border-radius: var(--button-radius, 8px);
-  background: var(--button-bg-color, #82b0fb);
-  color: var(--button-color, #ffffff);
+  background-color: #ffcd29;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  //text-transform: uppercase;
+  //transition: transform 80ms ease-in;
+  text-decoration-line: none;
 
-  &:active,
+  &:active {
+    transform: scale(0.95);
+  }
   &:hover {
-    background-color: #e8bda6;
-    color: White;
+    cursor: pointer;
   }
 
   &:focus {
-    background: var(--button-hover-bg-color, #ffa97b); //누를때
+    //background: var(--button-hover-bg-color, #ffcd29); //누를때
   }
 
   &:disabled {
@@ -41,18 +44,19 @@ const StButton = styled.button`
     switch (size) {
       case 'lg':
         return css`
-          width: 90%;
+          width: 200px;
           height: 50px;
+          background-color: #646464;
         `;
       case 'md':
         return css`
-          width: 100px;
+          width: 145px;
+          height: 45px;
         `;
       case 'sm':
         return css`
           width: 30px;
-          height: 30px !important;
-          background-color: bisque;
+          height: 30px;
         `;
       default:
         return css`
