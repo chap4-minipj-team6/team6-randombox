@@ -117,12 +117,14 @@ const MenuBox = styled.div`
 
 const MenuWrap = styled.div`
   /* margin-right: 0 30px 20px 0; */
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Menu = styled.div`
   float: left;
-  padding: 10px 10px;
+  padding: 10px 20px;
 
   border-radius: 10px;
 
@@ -132,7 +134,7 @@ const Menu = styled.div`
     box-shadow: none;
     color: white;
   }
-  box-shadow: 0 3px 6px 0 #fea528;
+  box-shadow: 0 2px 6px 0 #fea528;
 
   font-weight: bold;
 `;
