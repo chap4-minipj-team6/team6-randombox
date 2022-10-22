@@ -167,6 +167,7 @@ const Input = styled.input`
   width: 400px;
   height: 16px;
   padding: 12px;
+  margin-left: 10px;
 
   border-radius: 14px;
   border: 1px solid white;
