@@ -69,7 +69,7 @@ const Gnb = styled.div`
   flex-direction: row;
 
   padding: 10px;
-  margin-right: 2%;
+  margin-right: 10%;
 
   border-radius: 10px;
   box-shadow: 0 2px 5px 0 #fcd19c;
@@ -78,13 +78,18 @@ const Gnb = styled.div`
 `;
 
 const Nav = styled.div`
-  width: inherit;
+  width: 80%;
+
+  margin: 0 auto;
 
   flex-direction: row;
 
   padding: 30px;
   border-radius: 30px;
   background-color: #ffefc1;
+  &:hover {
+    box-shadow: 0 3px 6px 0 #fea528;
+  }
 `;
 
 const Username = styled.div`
@@ -121,13 +126,15 @@ const Menu = styled.div`
 
   border-radius: 10px;
 
-  border: 1px solid #fea528;
+  /* border: 1px solid #fea528; */
   &:hover {
     background-color: #fea528;
     box-shadow: none;
     color: white;
   }
-  box-shadow: 0 3px 3px 0 #fea528;
+  box-shadow: 0 3px 6px 0 #fea528;
+
+  font-weight: bold;
 `;
 
 const Homebutton = styled.button`
