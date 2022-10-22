@@ -1,4 +1,5 @@
 import React from 'react';
+// import { useEffect} from 'react';
 import styled from 'styled-components';
 // import { FcHome } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -7,6 +8,30 @@ import '../style/style.css';
 
 const Header = () => {
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!isSuccess) {
+  //     return;
+  //   }
+  //   if (isSuccess) {
+  //     return navigate('/MyPage');
+  //   }
+  //   return () => dispatch(completeTodo());
+  // }, [dispatch, isSuccess, navigate]);
+
+  // const onAddBtn = (e) => {
+  //   e.preventDefault();
+  //   if (
+  //     todo.username.trim() === '' ||
+  //     todo.title.trim() === '' ||
+  //     todo.body.trim() === ''
+  //   ) {
+  //     return;
+  //     // console.log(alert(1));
+  //   }
+  //   dispatch(__addBtn(todo));
+  //   reset();
+  //   navigate('/MyPage');
+  // };
 
   return (
     <HeaderWrap>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import styled from 'styled-components';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Header = () => {
           <Username>유저이름</Username>
           <Point>
             <P>
-              잔여포인트 : <span>5000P</span>
+              잔여포인트 : <span>5000</span>P
             </P>
           </Point>
         </Gnb>
@@ -45,7 +46,7 @@ const Header = () => {
 
 export default Header;
 
-/헤더
+//헤더
 const HeaderWrap = styled.div`
   width: inherit;
 `;
@@ -62,12 +63,16 @@ const GnbBox = styled.div`
 
 const Gnb = styled.div`
   float: right;
-  width: 300px;
+  width: 250px;
 
   display: flex;
   flex-direction: row;
 
+  padding: 10px;
+  margin-right: 2%;
+
   border-radius: 10px;
+  box-shadow: 0 2px 5px 0 #fcd19c;
 
   gap: 10px;
 `;
@@ -83,15 +88,13 @@ const Nav = styled.div`
 `;
 
 const Username = styled.div`
-  margin-right: 10%;
+  margin-right: 5%;
 `;
 
 const Point = styled.div`
   float: right;
   width: 150px;
   display: flex;
-
-  margin-right: 10px;
 `;
 
 const P = styled.div`
@@ -118,11 +121,13 @@ const Menu = styled.div`
 
   border-radius: 10px;
 
-  border: 2px solid #fea528;
+  border: 1px solid #fea528;
   &:hover {
     background-color: #fea528;
+    box-shadow: none;
     color: white;
   }
+  box-shadow: 0 3px 3px 0 #fea528;
 `;
 
 const Homebutton = styled.button`
