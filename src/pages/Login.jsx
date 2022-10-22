@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import useInput from '../myhook/useInput';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [info, SetInfo] = useState({
-    username: "",
-    title: "",
-    body: "",
+  const [info, onChangeValue, reset] = useInput({
+    username: '',
+    title: '',
+    body: '',
   });
-  const [value, SetValue] = useState();
-  const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!isSuccess) {
-  //     return;
-  //   }
-  //   if (isSuccess) {
-  //     return navigate("/Mainpage");
-  //   }
-  //   return () => dispatch(completeTodo());
-  // }, [dispatch, isSuccess, navigate]);
 
-  const onChangeValue = (e) => {
-    const { name, value } = e.target;
-    SetValue({ ...info, [name]: value });
-  };
+  const navigate = useNavigate();
 
   return (
     <LoginBox>
@@ -48,7 +35,7 @@ const Login = () => {
         <button>로그인</button>
         <button
           onClick={() => {
-            navigate("/SignUp");
+            navigate('/SignUp');
           }}
         >
           회원가입
