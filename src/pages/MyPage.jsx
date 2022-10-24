@@ -6,20 +6,25 @@ import Button from '../element/Button';
 import ItemList from '../components/ItemList';
 import { useDispatch } from 'react-redux';
 import { __getMypage } from '../redux/modules/mypageSlice';
+import { RandomsApi } from '../tools/instance';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const MyPage = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  axios
+    .get('/user?ID=12345') //어디서 가져오지
 
-  const initialState = {
-    todos: [],
-    isLoading: false,
-    error: null,
-  };
-
-  useEffect(() => {
-    dispatch(__getMypage(id));
-  }, [dispatch]);
+    .then(function (response) {
+      // 성공했을 때
+      console.log(response);
+    })
+    .catch(function (error) {
+      // 에러가 났을 때
+      console.log(error);
+    })
+    .finally(function () {
+      // 항상 실행되는 함수
+    });
 
   const Alert = () => {
     alert('계좌번호: 신한 111-111-11111 \n관리자 확인 후 충전됩니다.');
@@ -44,7 +49,7 @@ const MyPage = () => {
           </div>
           <Stdiv>
             <p>소유한 포인트 </p>
-            <p>3000P</p>
+            <p>5000P</p>
             <Button size="md" onClick={() => Alert()}>
               충전하기
             </Button>

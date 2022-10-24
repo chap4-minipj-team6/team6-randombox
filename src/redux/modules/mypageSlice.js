@@ -11,9 +11,14 @@ export const __getMypage = createAsyncThunk(
   'getMypage',
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get('http://localhost:3001/mypage/:userid');
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(payload); // 이 값이 saha 여야만 해
+      if (payload === 'saha') {
+        // http://3.35.231.116/mypages/saha
+        const data = await axios.get('http://3.35.231.116/mypages/', payload);
+        console.log(data);
+        return thunkAPI.fulfillWithValue(data.data);
+      }
+      return false;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

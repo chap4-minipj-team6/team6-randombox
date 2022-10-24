@@ -8,10 +8,10 @@ const initialState = {
 };
 
 export const __postPersonalEdit = createAsyncThunk(
-  'personal',
+  'postPersonalEdit',
   async (payload, thunkAPI) => {
     try {
-      axios.post('http://localhost:3001/personal', payload);
+      await axios.post('http://localhost:3001/personal', payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -29,7 +29,7 @@ const personalSlice = createSlice({
     },
     [__postPersonalEdit.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.personal = [...state.personal, action.payload];
+      state.personal = action.payload;
     },
     [__postPersonalEdit.rejected]: (state, action) => {
       state.isLoading = false;

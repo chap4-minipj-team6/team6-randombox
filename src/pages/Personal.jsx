@@ -9,8 +9,10 @@ import { useState } from 'react';
 const Personal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const _id = Math.floor(Math.random() * 101); //TODO: 나중에 여기 지울것
   const [personal, setPersonal] = useState({
-    id: '1',
+    id: _id, //TODO: 나중에 여기 지울것
     nickname: '',
     password: '',
     confirm: '',
@@ -19,13 +21,6 @@ const Personal = () => {
   });
 
   const onPersonalHandler = (e) => {
-    const _id = personal.id++;
-
-    setPersonal({
-      ...personal,
-      id: _id,
-    });
-
     dispatch(__postPersonalEdit(personal));
     alert('수정이 완료되었습니다.');
     navigate('/Mypage');

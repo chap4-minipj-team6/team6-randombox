@@ -1,98 +1,67 @@
-import React, { useState } from 'react';
-//import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
-//import useInput from '../hooks/useInput';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useCallback } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../element/Button';
-import { useDispatch } from 'react-redux';
-//import { __loginThunk } from '../redux/modules/loginSlice';
-import { __postAddLogin } from '../redux/modules/loginSlice';
-//import { useEffect } from 'react';
-// import useInput from '../hooks/useInput';
+import { useCookies } from 'react-cookie'; // useCookies import
+import { RandomsApi } from '../tools/instance';
+import useInput from '../hooks/useInput';
 
 const Login = () => {
-  // const [id, onChangeId, setId] = useInput('');
-  // const [pwd, onChangePwd, setPwd] = useInput('');
-  const dispatch = useDispatch();
+  const [loginid, onChangeId] = useInput('');
+  const [loginpwd, onChangePwd] = useInput('');
+
+  const formRef = useRef();
+  const [tokens, setTokens] = useCookies(['token']); // 쿠키 훅
   const navigate = useNavigate();
 
-  const [login, setLogin] = useState({
-    id: '',
-    password: '',
-  });
+  const login = (e) => {
+    e.preventDefault();
 
-  // const onLoginTest = () => {
-  //   var _id = document.getElementById('loginID').value;
-  //   var _pw = document.getElementById('loginPassword').value;
-  //   console.log('input ID 값 : ' + _id);
-  //   console.log('input PW 값 : ' + _pw);
+    RandomsApi.login({
+      id: formRef.current.id.value,
+      password: formRef.current.password.value,
+    })
 
-  //   setLogin({
-  //     ...login,
-  //     id: _id,
-  //   });
-  //   setLogin({
-  //     ...login,
-  //     password: _pw,
-  //   });
-  // };
-
-  const onLoginHandler = (e) => {
-    console.log('매개변수 받은 값 : ' + login.id);
-    console.log('매개변수 받은 값 : ' + login.password);
-    if (!login.id || !login.password) {
-      alert('모든 값을 정확하게 입력해주세요');
-      return;
-    }
-    dispatch(__postAddLogin(login));
-    navigate('/Mainpage');
+      // .post('http://3.35.231.116/login', {
+      //   id: formRef.current.id.value,
+      //   password: formRef.current.password.value,
+      // })
+      .then((res) => {
+        //console.log(res);
+        setTokens('token', res.data.token); // 쿠키에 토큰 저장
+        alert(res.data.message);
+        navigate('/Mainpage');
+      });
+    console.log(tokens);
   };
-
-  // useEffect(() => {
-  //   dispatch(__getLogin());
-  // }, [dispatch]);
 
   return (
     <StBody>
       <StContainer>
         <StWrap>
           <h1>로그인</h1>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              onLoginHandler(login);
-            }}
-          >
+          <form ref={formRef} onSubmit={login}>
             <div>
               <div>
                 <Stinput
                   placeholder="아이디를 입력하세요."
-                  id="loginID"
-                  minLength="1"
+                  id="id"
+                  //name="id"
                   type="text"
-                  onChange={(ev) => {
-                    const { value } = ev.target;
-                    setLogin({
-                      ...login,
-                      id: value,
-                    });
-                  }}
+                  minLength="1"
+                  value={loginid}
+                  onChange={onChangeId}
                 />
               </div>
               <div>
                 <Stinput
                   placeholder="비밀번호를 입력하세요."
-                  id="loginPassword"
-                  minLength="3"
+                  id="password"
+                  //name="password"
                   type="password"
-                  onChange={(ev) => {
-                    const { value } = ev.target;
-                    setLogin({
-                      ...login,
-                      password: value,
-                    });
-                  }}
+                  minLength="3"
+                  value={loginpwd}
+                  onChange={onChangePwd}
                 />
               </div>
             </div>
@@ -162,7 +131,7 @@ const Stinput = styled.input`
   margin: 8px 0 30px 0;
   width: 100%;
   min-width: 300px;
-  font-family: 'LeferiPoint-WhiteObliqueA';
+  font-family: 'MonoplexKR-Regular';
 `;
 
 const BtContain = styled.div`

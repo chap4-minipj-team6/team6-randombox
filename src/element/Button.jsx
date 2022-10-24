@@ -14,7 +14,7 @@ const StButton = styled.button`
   border-radius: 20px;
   border: none;
   background-color: #ffcd29;
-  color: #ffffff;
+  color: black;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;

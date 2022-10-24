@@ -1,5 +1,7 @@
 import React from 'react';
-// import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
+import jwt_decode from 'jwt-decode';
+import Tokens from '../components/Tokens';
 
 const Mainpage = () => {
   return <div>Mainpage</div>;
