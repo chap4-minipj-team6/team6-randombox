@@ -9,3 +9,10 @@ export const RandomsApi = {
   deleteTodos: (payload) => instance.delete(`/signUps${payload}`),
   patchTodos: (payload) => instance.patch(`/signUps${payload.id}`, payload),
 };
+
+//
+// const re_id = /^[a-zA-Z0-9]{4,10}$/;
+// const re_nickname = /^[a-zA-Z0-9]{3,10}$/;
+// const re_password = /^[a-zA-Z0-9]{4,30}$/;
+// const re_email =
+// /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;

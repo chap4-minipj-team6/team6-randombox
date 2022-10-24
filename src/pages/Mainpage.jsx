@@ -1,7 +1,5 @@
 import React from 'react';
-// import { useEffect} from 'react';
 import styled from 'styled-components';
-// import { FcHome } from "react-icons/fa";
 import '../style/style.css';
 import Header from '../components/Header';
 
@@ -10,6 +8,7 @@ const MyPage = () => {
     <div>
       <Header />
       <div>
+        {/* 오픈버튼을 클릭하기 전에 이 이미지가 뜨고 클릭후  */}
         <ImgWrap>
           <Img
             src="https://src.wizad.co.kr/wizbbs/data/shopimg/A1563523810533_p1.png"

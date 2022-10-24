@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { __addBtn } from '../redux/modules/signUpSlice';
-// import { completeSign, __addBtn } from '../redux/modules/signUpSlice';
+// import { __addBtn } from '../redux/modules/signUpSlice';
+import { completeSign, __addBtn } from '../redux/modules/signUpSlice';
 import { useDispatch } from 'react-redux';
 import useInput from '../myhook/useInput';
 import Button from '../element/commonBtn';
@@ -22,7 +22,7 @@ const SignUp = () => {
     email: '',
   });
 
-  // console.log(info);
+  console.log(info);
 
   // useEffect(() => {
   //   if (!isSuccess) {
@@ -34,10 +34,12 @@ const SignUp = () => {
   //   return () => dispatch(completeSign());
   // }, [dispatch, isSuccess, navigate]);
 
+  // if (info.password.value !== info.confirm.value)
+  //   return alert('비밀번호 확인을 다시 해주세요!');
   // if (isLoading) {
   //   return <div>로딩중...</div>;
   // }
-  // if (error) return <div>에러가 발생했습니다</div>;
+  // if (error) return <div>오류가 발생했습니다</div>;
 
   const onAddBtn = (e) => {
     e.preventDefault();
@@ -54,9 +56,14 @@ const SignUp = () => {
     }
 
     dispatch(__addBtn(info));
-    // console.log(1);
+    console.log(1);
     reset();
-    navigate('/Mainpage');
+    // if (!isSuccess) {
+    //   return <div>오류가 발생했습니다</div>;
+    // }
+    // if (isSuccess) {
+    //   return navigate('/Mainpage');
+    // }
   };
 
   return (
@@ -80,14 +87,16 @@ const SignUp = () => {
           />
           <Label>비밀번호</Label>
           <SignInput
-            type="text"
+            type="password"
+            // autocomplete="current-password"
             name="password"
             value={info.password}
             onChange={onChangeValue}
           />
           <Label>비밀번호 확인</Label>
           <SignInput
-            type="text"
+            type="password"
+            // autocomplete="new-password"
             name="confirm"
             value={info.confirm}
             onChange={onChangeValue}
