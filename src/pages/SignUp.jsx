@@ -1,55 +1,107 @@
 import React from 'react';
-import useInput from '../myhook/useInput';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { __addBtn } from '../redux/modules/signUpSlice';
+// import { completeSign, __addBtn } from '../redux/modules/signUpSlice';
+import { useDispatch } from 'react-redux';
+import useInput from '../myhook/useInput';
+import Button from '../element/commonBtn';
 
 const SignUp = () => {
-  const [info, onChangeValue, reset] = useInput({
-    userId: '',
-    username: '',
-    userPw: '',
-    userPw_02: '',
-    address: '',
-    point: '',
-  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const isSuccess = useSelector((state) => state.signUpS);
+  // const { isLoading, error } = useSelector((state) => state.signUpS);
+
+  const [info, onChangeValue, reset] = useInput({
+    id: '',
+    nickname: '',
+    password: '',
+    confirm: '',
+    address: '',
+    email: '',
+  });
+
+  // console.log(info);
+
+  // useEffect(() => {
+  //   if (!isSuccess) {
+  //     return;
+  //   }
+  //   if (isSuccess) {
+  //     return navigate('/Mainpage');
+  //   }
+  //   return () => dispatch(completeSign());
+  // }, [dispatch, isSuccess, navigate]);
+
+  // if (isLoading) {
+  //   return <div>로딩중...</div>;
+  // }
+  // if (error) return <div>에러가 발생했습니다</div>;
+
+  const onAddBtn = (e) => {
+    e.preventDefault();
+
+    if (
+      info.id.trim() === '' ||
+      info.nickname.trim() === '' ||
+      info.password.trim() === '' ||
+      info.confirm.trim() === '' ||
+      info.address.trim() === '' ||
+      info.email.trim() === ''
+    ) {
+      return alert('모든 항목을 입력해주셔유');
+    }
+
+    dispatch(__addBtn(info));
+    // console.log(1);
+    reset();
+    navigate('/Mainpage');
+  };
 
   return (
     <SignUpBox>
       <H1>회원가입</H1>
-      <Form>
+      <Form onSubmit={onAddBtn}>
         <SignUpSet>
-          <Label htmlFor="">아이디</Label>
+          <Label>아이디</Label>
           <SignInput
             type="text"
-            name="userId"
-            value={info.userId}
+            name="id"
+            value={info.id}
             onChange={onChangeValue}
           />
-          <Label htmlFor="">닉네임</Label>
+          <Label>닉네임</Label>
           <SignInput
             type="name"
-            name="userName"
-            value={info.userName}
+            name="nickname"
+            value={info.nickname}
             onChange={onChangeValue}
           />
-          <Label htmlFor="">비밀번호</Label>
+          <Label>비밀번호</Label>
           <SignInput
             type="text"
-            name="userPw"
-            value={info.userPw}
+            name="password"
+            value={info.password}
             onChange={onChangeValue}
           />
-          <Label htmlFor="">비밀번호 확인</Label>
+          <Label>비밀번호 확인</Label>
           <SignInput
             type="text"
-            name="userPw_02"
-            value={info.userPw_02}
+            name="confirm"
+            value={info.confirm}
             onChange={onChangeValue}
           />
-          <Label htmlFor="">배송주소</Label>
+          <Label>이메일</Label>
+          <SignInput
+            type="email"
+            name="email"
+            value={info.email}
+            onChange={onChangeValue}
+          />
+          <Label>배송주소</Label>
           <SignAddrInput
-            type="address"
+            type="text"
             name="address"
             value={info.address}
             onChange={onChangeValue}
@@ -58,13 +110,13 @@ const SignUp = () => {
             소유한 포인트 : <span>0000</span>
           </SavePoint>
         </SignUpSet>
-        <SignButton
-          onClick={() => {
-            navigate('/Mainpage');
-          }}
+        <Button
+        // onClick={() => {
+        //   navigate('/Mainpage');
+        // }}
         >
           가입완료
-        </SignButton>
+        </Button>
       </Form>
     </SignUpBox>
   );
@@ -97,7 +149,7 @@ const SignUpBox = styled.div`
 const H1 = styled.h1`
   margin: 0 auto 20px auto;
 `;
-const Form = styled.div`
+const Form = styled.form`
   width: 250px;
 
   display: flex;
@@ -135,17 +187,17 @@ const SavePoint = styled.div`
   margin-top: 10px;
 `;
 
-const SignButton = styled.button`
-  width: inherit;
-  border: 1px solid black;
-  border-radius: 5px;
+// const Button = styled.button`
+//   width: inherit;
+//   border: 1px solid black;
+//   border-radius: 5px;
 
-  margin: 0 auto;
+//   margin: 0 auto;
 
-  padding: 8px;
-  border: 1px solid #ffd372;
-  background-color: #ffd372;
-`;
+//   padding: 8px;
+//   border: 1px solid #ffd372;
+//   background-color: #ffd372;
+// `;
 
 // const BgBox = styled.div`
 //   width: 100%;
