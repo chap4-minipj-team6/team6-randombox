@@ -1,12 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { __addBtn } from '../redux/modules/signUpSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import useInput from '../myhook/useInput';
+import Button from '../element/commonBtn';
+import { useParams } from 'react-router-dom';
 
 const Request = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const [good, onChangeValue, reset] = useInput({
+    requestId: `${id}`,
+    userId: `${id}`,
+    comment: '',
+  });
+
+  const onAddBtn = (e) => {
+    e.preventDefault();
+    if (good.comment.trim() === '') {
+      return alert('모든 항목을 입력해주셔유');
+    }
+
+    dispatch(__addBtn(good));
+
+    console.log(1);
+
+    reset();
+  };
+
   return (
     <div>
       <Header />
-      <Form>
+      <Form onSubmit={onAddBtn}>
         <div>
           <InputWrap>
             <Input type="text" placeholder="원하는 상품을 입력해주세요" />
@@ -19,10 +45,12 @@ const Request = () => {
           <CommentSet>
             <UserName>userName</UserName>
             <Comment>comment</Comment>
-            {/* {data.map((comment) => (
+            {/* <div>
+            {data.map((comment) => (
             <div key={comment.id}>{comment.userName}</div>  
             <div>comment</div> 
-               ))} */}
+            ))}
+              </div> */}
           </CommentSet>
         </WannaList>
       </div>
@@ -126,22 +154,22 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  float: right;
-  width: 100px;
+// const Button = styled.button`
+//   float: right;
+//   width: 100px;
 
-  padding: 12px;
-  margin: 0 20px;
+//   padding: 12px;
+//   margin: 0 20px;
 
-  border: none;
-  border-radius: 20px;
+//   border: none;
+//   border-radius: 20px;
 
-  margin-right: 26%;
+//   margin-right: 26%;
 
-  background-color: #ffefc1;
+//   background-color: #ffefc1;
 
-  &:hover {
-    background-color: #fcd19c;
-    cursor: pointer;
-  }
-`;
+//   &:hover {
+//     background-color: #fcd19c;
+//     cursor: pointer;
+//   }
+// `;

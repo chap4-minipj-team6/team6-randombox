@@ -1,18 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-// import { __addBtn } from '../redux/modules/signUpSlice';
-import { completeSign, __addBtn } from '../redux/modules/signUpSlice';
-import { useDispatch } from 'react-redux';
+import { __addBtn } from '../redux/modules/signUpSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../myhook/useInput';
 import Button from '../element/commonBtn';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const isSuccess = useSelector((state) => state.signUpS);
+  const isSuccess = useSelector((state) => state.signUpS.isSuccess);
+  console.log(isSuccess);
+  // const error = useSelector((state) => state.signUpS);
+  // console.log(error);
+  // const SignStatus = error.response;
+  // console.log(SignStatus);
+
+  // const successSign = error?.request;
+  // console.log(successSign);
+  // console.log(error);
+
+  // const SignStatus = res.request.status;
+  // const idError = res.data.errorMessage;
+  // // console.log(successData);
+  // console.log(error);
+  // const idError = error.response.data.errorMessage;
+  // // console.log(idError);
+  // const SignStatus = error.response.request.status;
+  // console.log(failSignStatus);
   // const { isLoading, error } = useSelector((state) => state.signUpS);
 
+  // if (info.password.value !== info.confirm.value)
+  //   return alert('비밀번호 확인을 다시 해주세요!');
+  // if (isLoading) {
+  //   return <div>로딩중...</div>;
+  // }
+  // if (error) return <div>오류가 발생했습니다</div>;
+  // console.log(info.id.length);
+
+  // console.log(info);
   const [info, onChangeValue, reset] = useInput({
     id: '',
     nickname: '',
@@ -21,28 +47,14 @@ const SignUp = () => {
     address: '',
     email: '',
   });
-
-  console.log(info);
-
-  // useEffect(() => {
-  //   if (!isSuccess) {
-  //     return;
-  //   }
-  //   if (isSuccess) {
-  //     return navigate('/Mainpage');
-  //   }
-  //   return () => dispatch(completeSign());
-  // }, [dispatch, isSuccess, navigate]);
-
-  // if (info.password.value !== info.confirm.value)
-  //   return alert('비밀번호 확인을 다시 해주세요!');
-  // if (isLoading) {
-  //   return <div>로딩중...</div>;
-  // }
-  // if (error) return <div>오류가 발생했습니다</div>;
-
   const onAddBtn = (e) => {
     e.preventDefault();
+    info.id === '' ? alert('아이디를 입력하세요!') : <></>;
+    if (info.nickname.length <= 2) {
+      alert('닉네임이 너무 짧습니다');
+      return;
+    }
+    //비밀번호 확인
 
     if (
       info.id.trim() === '' ||
@@ -56,15 +68,18 @@ const SignUp = () => {
     }
 
     dispatch(__addBtn(info));
-    console.log(1);
+    console.log(info);
+    console.log(2);
+
     reset();
-    // if (!isSuccess) {
-    //   return <div>오류가 발생했습니다</div>;
-    // }
-    // if (isSuccess) {
-    //   return navigate('/Mainpage');
-    // }
   };
+  //error도 하나의 객체.
+  // if (SignStatus === 200) {
+  //   alert(${idError});
+  //   return navigate('/Login');
+  // } else if (SignStatus === 412) {
+  //   alert(${idError});
+  // }
 
   return (
     <SignUpBox>
@@ -78,6 +93,17 @@ const SignUp = () => {
             value={info.id}
             onChange={onChangeValue}
           />
+
+          {info.id.length === 0 ? (
+            <div></div>
+          ) : info.id.length <= 3 || info.id.length >= 11 ? (
+            <ErrorMessage>
+              아이디는 대,소문자 또는 숫자를 포함한 4글자 이상 10글자 이하로
+              적어주세요
+            </ErrorMessage>
+          ) : (
+            <div></div>
+          )}
           <Label>닉네임</Label>
           <SignInput
             type="name"
@@ -85,22 +111,47 @@ const SignUp = () => {
             value={info.nickname}
             onChange={onChangeValue}
           />
+          {info.nickname.length === 0 ? (
+            <div></div>
+          ) : info.nickname.length <= 3 || info.nickname.length >= 11 ? (
+            <ErrorMessage>
+              닉네임은 대,소문자 또는 숫자를 포함한 3자 이상 10글자 이하로
+              적어주세요
+            </ErrorMessage>
+          ) : (
+            <div></div>
+          )}
           <Label>비밀번호</Label>
           <SignInput
             type="password"
-            // autocomplete="current-password"
             name="password"
             value={info.password}
             onChange={onChangeValue}
           />
+          {info.password.length === 0 ? (
+            <div></div>
+          ) : info.password.includes(info.nickname) ? (
+            <ErrorMessage>패스워드에 닉네임이 포함되어있습니다.</ErrorMessage>
+          ) : info.password.length <= 3 || info.password.length >= 30 ? (
+            <ErrorMessage>
+              비밀번호는 대,소문자 또는 숫자를 포함한 4자 이상 30글자 이하로
+              적어주세요
+            </ErrorMessage>
+          ) : (
+            <></>
+          )}
           <Label>비밀번호 확인</Label>
           <SignInput
             type="password"
-            // autocomplete="new-password"
             name="confirm"
             value={info.confirm}
             onChange={onChangeValue}
           />
+          {info.password !== info.confirm ? (
+            <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
+          ) : (
+            <div></div>
+          )}
           <Label>이메일</Label>
           <SignInput
             type="email"
@@ -108,6 +159,13 @@ const SignUp = () => {
             value={info.email}
             onChange={onChangeValue}
           />
+          {info.email.length === 0 ? (
+            <div></div>
+          ) : !info.email.includes('@') || !info.email.includes('.') ? (
+            <ErrorMessage>@를 포함한 정상적인 이메일을 써주세요.</ErrorMessage>
+          ) : (
+            <div></div>
+          )}
           <Label>배송주소</Label>
           <SignAddrInput
             type="text"
@@ -115,13 +173,14 @@ const SignUp = () => {
             value={info.address}
             onChange={onChangeValue}
           />
+          {/* {error} */}
           <SavePoint>
             소유한 포인트 : <span>0000</span>
           </SavePoint>
         </SignUpSet>
         <Button
         // onClick={() => {
-        //   navigate('/Mainpage');
+        //   navigate('/Login');
         // }}
         >
           가입완료
@@ -138,8 +197,16 @@ export default SignUp;
 //   height: 700px;
 //   padding: 10px;
 //   border: 1px solid black;
+
 // `;
 
+//유효성검사
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+`;
+
+//
 const SignUpBox = styled.div`
   width: 400px;
 

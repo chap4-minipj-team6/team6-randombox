@@ -2,18 +2,30 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RandomsApi } from '../../tools/instance';
 
 //Thunk 함수
+
 export const __addBtn = createAsyncThunk(
   'addBtn',
   async (payload, thunkAPI) => {
     console.log(payload);
+    const { data } = await RandomsApi.postSignUps(payload);
+    console.log(data);
+    // .then((res) => console.log(res))
+    // .catch((err) => console.log(err));
+
+    // // const { data } = await axios.post(url, payload)
+
     try {
-      const { data } = await RandomsApi.postSignUps(payload);
-      // const { data } = await axios.post(url, payload)
-      console.log(data);
+      // const data = RandomsApi.postSignUps(payload);
+
       return thunkAPI.fulfillWithValue(data);
-    } catch (err) {
-      //error도 하나의 객체.
-      return thunkAPI.rejectWithValue(err);
+    } catch (res) {
+      return thunkAPI.rejectWithValue(res);
+      //   console.log(res);
+      //   // if (res.data.code === 200) {
+      //   //   alert(res.data.message);
+      //   // } else if (res.data.coe === 412) {
+      //   //   alert(res.data.errorMessage);
+      //   // }
     }
   }
 );
