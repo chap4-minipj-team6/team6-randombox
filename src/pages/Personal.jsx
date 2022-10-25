@@ -3,35 +3,40 @@ import styled from 'styled-components';
 import Button from '../element/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { __postPersonalEdit } from '../redux/modules/personalSlice';
 import { useState } from 'react';
+import axios from 'axios';
+import { RandomsApi } from '../tools/instance';
 
 const Personal = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const _id = Math.floor(Math.random() * 101); //TODO: 나중에 여기 지울것
-  const [personal, setPersonal] = useState({
-    id: _id, //TODO: 나중에 여기 지울것
+  const [data, setData] = useState([]);
+
+  const initialState = {
     nickname: '',
     password: '',
     confirm: '',
     email: '',
     address: '',
-  });
+  };
+  const [personal, setPersonal] = useState(initialState);
 
   const onPersonalHandler = (e) => {
-    dispatch(__postPersonalEdit(personal));
-    alert('수정이 완료되었습니다.');
-    navigate('/Mypage');
+    RandomsApi.personal().then((res) => {
+      setData(res.data);
+      alert(res.data.message);
+      setPersonal(initialState);
+    });
   };
+
   return (
     <div>
       <StBody>
         <StContainer>
           <StWrap>
+            <Stxbutton onClick={() => navigate(-1)}>❌</Stxbutton>
             <h1>개인정보 수정</h1>
-            <p>패스워드와 패스워드 확인란이 달라요</p>
+            <p>{data.message}</p>
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -172,4 +177,11 @@ const Stinput = styled.input`
   margin: 0px 0 20px 0;
   width: 100%;
   min-width: 300px;
+`;
+
+const Stxbutton = styled.div`
+  margin-top: 10px;
+  display: flex;
+  margin-left: 340px;
+  cursor: pointer;
 `;

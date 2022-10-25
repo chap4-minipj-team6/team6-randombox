@@ -1,34 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../element/Button';
+import { useCookies } from 'react-cookie';
+import jwt_decode from 'jwt-decode';
+import { RandomsApi } from '../tools/instance';
+import Item from '../components/Item';
 
 const ItemList = () => {
+  const [tokens, setTokens] = useCookies(['token']);
+  const accesstoken = jwt_decode(tokens.token);
+  const userId = accesstoken.userId;
+  const [items, setItems] = useState([]);
+
+  // RandomsApi.itemlist().then((res) => {
+  //   setItems(res.data.data);
+  //   //(items);
+  // });
+
   return (
+    // <StItemList> <Item key={item.id} itemData={item} /> </StItemList>
+
     <StItemList>
-      <StItem>
-        <div>에어팟</div>
-        {/* <div>{itemName}</div> */}
-        <StButton>
-          <Button size="md">배송하기</Button>
-          <Button size="md">버리기</Button>
-        </StButton>
-      </StItem>
-      <StItem>
-        <div>에어팟</div>
-        {/* <div>{itemName}</div> */}
-        <StButton>
-          <Button size="md">배송하기</Button>
-          <Button size="md">버리기</Button>
-        </StButton>
-      </StItem>
-      <StItem>
-        <div>에어팟</div>
-        {/* <div>{itemName}</div> */}
-        <StButton>
-          <Button size="md">배송하기</Button>
-          <Button size="md">버리기</Button>
-        </StButton>
-      </StItem>
+      <Item />
     </StItemList>
   );
 };
@@ -44,21 +37,4 @@ const StItemList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const StItem = styled.div`
-  width: 700px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffdfa8;
-  border-radius: 20px;
-  padding: 10px 10px 10px 30px;
-  margin-bottom: 10px;
-  align-items: center;
-`;
-
-const StButton = styled.div`
-  width: 320px;
-  display: flex;
-  justify-content: space-around;
 `;

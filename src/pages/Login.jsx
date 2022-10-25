@@ -16,23 +16,14 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault();
-
     RandomsApi.login({
       id: formRef.current.id.value,
       password: formRef.current.password.value,
-    })
-
-      // .post('http://3.35.231.116/login', {
-      //   id: formRef.current.id.value,
-      //   password: formRef.current.password.value,
-      // })
-      .then((res) => {
-        //console.log(res);
-        setTokens('token', res.data.token); // 쿠키에 토큰 저장
-        alert(res.data.message);
-        navigate('/Mainpage');
-      });
-    console.log(tokens);
+    }).then((res) => {
+      setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
+      alert(res.data.message);
+      navigate('/Mainpage');
+    });
   };
 
   return (

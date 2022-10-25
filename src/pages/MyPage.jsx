@@ -1,35 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../element/Button';
 import ItemList from '../components/ItemList';
-import { useDispatch } from 'react-redux';
-import { __getMypage } from '../redux/modules/mypageSlice';
 import { RandomsApi } from '../tools/instance';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import jwt_decode from 'jwt-decode';
 
 const MyPage = () => {
-  axios
-    .get('/user?ID=12345') //어디서 가져오지
+  const [tokens, setTokens] = useCookies(['token']);
+  const accesstoken = jwt_decode(tokens.token);
+  const userId = accesstoken.userId;
+  const [users, setUsers] = useState([]);
 
-    .then(function (response) {
-      // 성공했을 때
-      console.log(response);
-    })
-    .catch(function (error) {
-      // 에러가 났을 때
-      console.log(error);
-    })
-    .finally(function () {
-      // 항상 실행되는 함수
-    });
+  RandomsApi.mypage().then((res) => {
+    setUsers(res.data.data);
+  });
 
   const Alert = () => {
     alert('계좌번호: 신한 111-111-11111 \n관리자 확인 후 충전됩니다.');
   };
-  //const { user } = useUserState();
+
   return (
     <Layout>
       <StBody>
@@ -37,19 +29,19 @@ const MyPage = () => {
         <StInfo>
           <div>
             <p>아이디 </p>
-            <p>{}</p>
+            <p>{users.id}</p>
           </div>
           <div>
             <p>닉네임 </p>
-            <p>아메리카노</p>
+            <p>{users.nickname}</p>
           </div>
           <div>
             <p>이메일 </p>
-            <p>aaa111@gmail.com</p>
+            <p>{users.email}</p>
           </div>
           <Stdiv>
             <p>소유한 포인트 </p>
-            <p>5000P</p>
+            <p>{users.point} P</p>
             <Button size="md" onClick={() => Alert()}>
               충전하기
             </Button>
