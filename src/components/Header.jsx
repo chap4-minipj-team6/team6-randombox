@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import jwt_decode from 'jwt-decode';
+import { RandomsApi } from '../tools/instance';
 
 const Header = () => {
   const navigate = useNavigate();
+  const [tokens, setTokens] = useCookies(['token']);
+  const accesstoken = jwt_decode(tokens.token);
+  const userId = accesstoken.userId;
+  const [users, setUsers] = useState([]);
+
+  RandomsApi.header().then((res) => {
+    console.log(res);
+    setUsers(res.data.data);
+  });
 
   return (
     <HeaderWrap>
       <GnbBox>
         <Gnb>
-          <Username>유저이름</Username>
+          <Username>{users.name}</Username>
           <Point>
             <P>
-              잔여포인트 : <span>5000</span>P
+              잔여포인트 : <span>{users.point}</span>P
             </P>
           </Point>
         </Gnb>
@@ -29,13 +41,31 @@ const Header = () => {
           </Homebutton>
           <MenuBox>
             <Menu>
-              <Link to="/Request">상품요청</Link>
+              <div
+                onClick={() => {
+                  navigate(`/Request`);
+                }}
+              >
+                상품요청
+              </div>
             </Menu>
             <Menu>
-              <Link to="/Review">리뷰작성</Link>
+              <div
+                onClick={() => {
+                  navigate(`/Review`);
+                }}
+              >
+                리뷰작성
+              </div>
             </Menu>
             <Menu>
-              <Link to="/MyPage">마이페이지</Link>
+              <div
+                onClick={() => {
+                  navigate(`/MyPage/${userId}`);
+                }}
+              >
+                마이페이지
+              </div>
             </Menu>
           </MenuBox>
         </MenuWrap>
@@ -43,6 +73,7 @@ const Header = () => {
     </HeaderWrap>
   );
 };
+<div></div>;
 
 export default Header;
 
@@ -57,7 +88,7 @@ const GnbBox = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
+  margin-bottom: 40px;
   padding: 30px 0px 20px 0;
 `;
 
@@ -125,7 +156,7 @@ const MenuWrap = styled.div`
 const Menu = styled.div`
   float: left;
   padding: 10px 20px;
-
+  cursor: pointer;
   border-radius: 10px;
 
   /* border: 1px solid #fea528; */

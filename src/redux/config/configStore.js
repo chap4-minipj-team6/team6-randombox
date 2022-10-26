@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import mypage from '../modules/mypageSlice';
+import loginSlice from '../modules/LoginSlice';
 
 const store = configureStore({
-  reducer: { mypage: mypage },
+  reducer: { Login: loginSlice },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

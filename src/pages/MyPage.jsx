@@ -3,20 +3,41 @@ import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../element/Button';
-import ItemList from '../components/ItemList';
+//import ItemList from '../components/ItemList';
 import { RandomsApi } from '../tools/instance';
 import { useCookies } from 'react-cookie';
 import jwt_decode from 'jwt-decode';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const MyPage = () => {
   const [tokens, setTokens] = useCookies(['token']);
   const accesstoken = jwt_decode(tokens.token);
+  console.log(tokens.token);
   const userId = accesstoken.userId;
   const [users, setUsers] = useState([]);
 
-  RandomsApi.mypage().then((res) => {
-    setUsers(res.data.data);
-  });
+  useEffect(() => {
+    //window.location.replace(`/MyPage/${userId}`);
+  }, []);
+
+  // axios
+  //   .get(`http://15.165.15.206/mypage/${userId}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${tokens.token}`,
+  //     },
+  //   })
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+
+  // RandomsApi.mypage().then((res) => {
+  //   console.log(res);
+  //   setUsers(res.data.data);
+  // });
 
   const Alert = () => {
     alert('계좌번호: 신한 111-111-11111 \n관리자 확인 후 충전됩니다.');
@@ -52,7 +73,7 @@ const MyPage = () => {
         </Link>
         <div>
           <Sth2>현재 소유중인 상품</Sth2>
-          <ItemList /> {/* 아이템리스트 임포트 부분 */}
+          {/* <ItemList /> 아이템리스트 임포트 부분 */}
         </div>
       </StBody>
     </Layout>
@@ -62,7 +83,6 @@ const MyPage = () => {
 export default MyPage;
 
 const StBody = styled.div`
-  background: #f6f5f7;
   display: flex;
   justify-content: flex-start;
   align-items: center;

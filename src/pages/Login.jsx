@@ -1,10 +1,12 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../element/Button';
 import { useCookies } from 'react-cookie'; // useCookies import
 import { RandomsApi } from '../tools/instance';
 import useInput from '../hooks/useInput';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
 const Login = () => {
   const [loginid, onChangeId] = useInput('');
@@ -16,15 +18,45 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault();
+
     RandomsApi.login({
       id: formRef.current.id.value,
       password: formRef.current.password.value,
-    }).then((res) => {
-      setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
-      alert(res.data.message);
-      navigate('/Mainpage');
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.message === '로그인 성공') {
+          setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
+          alert(res.data.message);
+          navigate('/Mainpage');
+        } else {
+          alert(res.data.message);
+          return;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        //alert(error.message);
+        return;
+      });
+    // console.log(formRef.current.id.value);
+    // console.log(formRef.current.password.value);
+
+    // RandomsApi.login({
+    //   id: formRef.current.id.value,
+    //   password: formRef.current.password.value,
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(res.data.message);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
+  const token = document.cookie.replace('token=', ' ');
+  const accesstoken = token && jwt_decode(token);
+  const userid = accesstoken.userId;
 
   return (
     <StBody>
