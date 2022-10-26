@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../element/Button';
-import { useCookies } from 'react-cookie';
-import jwt_decode from 'jwt-decode';
-import { RandomsApi } from '../tools/instance';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { __deleteItems } from '../redux/modules/itemSlice';
 
-const ItemList = () => {
-  const [tokens, setTokens] = useCookies(['token']);
-  const accesstoken = jwt_decode(tokens.token);
-  const userId = accesstoken.userId;
-  const [items, setItems] = useState([]);
+const ItemList = ({ itemData }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  RandomsApi.itemlist().then((res) => {
-    console.log(res);
-    setItems(res.data.data);
-    console.log(items);
-  });
+  const onDeleteHandler = () => {
+    // dispatch(__deleteItems(itemData.userId));
+  };
+  //console.log('아이템', itemData);
+  if (!itemData) {
+    return null;
+  }
 
   return (
     <StItem>
-      {/* <div>{items.name}</div> */}
+      <div>{itemData.name}</div>
       <StButton>
         <Button size="md">배송하기</Button>
-        <Button size="md">버리기</Button>
+        <Button size="md" onclick={onDeleteHandler}>
+          버리기
+        </Button>
       </StButton>
     </StItem>
   );

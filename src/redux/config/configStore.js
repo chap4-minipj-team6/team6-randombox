@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import mypage from '../modules/mypageSlice';
+import item from '../modules/itemSlice';
 
 const store = configureStore({
-  reducer: { mypage: mypage },
+  reducer: { items: item },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

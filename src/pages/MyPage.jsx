@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,12 @@ const MyPage = () => {
   const userId = accesstoken.userId;
   const [users, setUsers] = useState([]);
 
-  RandomsApi.mypage().then((res) => {
-    setUsers(res.data.data);
-  });
+  useEffect(() => {
+    //window.location.replace(`/MyPage/${userId}`);
+    RandomsApi.mypage().then((res) => {
+      setUsers(res.data.data);
+    });
+  }, []);
 
   const Alert = () => {
     alert('계좌번호: 신한 111-111-11111 \n관리자 확인 후 충전됩니다.');
