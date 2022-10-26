@@ -15,16 +15,11 @@ const Mainpage = () => {
   const navigate = useNavigate();
 
   const openbox = () => {
-    const result = window.confirm(
-      '상품을 획득했습니다! \n마이페이지에서 확인하세요.'
-    );
-    //navigate(`/MyPage/${userId}`);
-    if (result) {
-      RandomsApi.boxopen({}).then((res) => {
-        alert(res);
-        //navigate(`/MyPage/${userId}`);
-      });
-    }
+    window.confirm('상품을 획득했습니다! \n마이페이지에서 확인하세요.');
+    RandomsApi.boxopen({}).then((res) => {
+      // alert(res);
+    });
+    navigate(`/MyPage/${userId}`);
   };
 
   return (

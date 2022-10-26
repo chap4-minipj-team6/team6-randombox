@@ -13,9 +13,9 @@ const ItemList = ({ itemData }) => {
     // dispatch(__deleteItems(itemData.userId));
   };
   //console.log('아이템', itemData);
-  if (!itemData) {
-    return null;
-  }
+  // if (!itemData) {
+  //   return null;
+  // }
 
   return (
     <StItem>
