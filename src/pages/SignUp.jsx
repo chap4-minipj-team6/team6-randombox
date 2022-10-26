@@ -11,10 +11,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const isSuccess = useSelector((state) => state.signUpS.isSuccess);
   console.log(isSuccess);
-  // const error = useSelector((state) => state.signUpS);
-  // console.log(error);
-  // const SignStatus = error.response;
-  // console.log(SignStatus);
 
   // const successSign = error?.request;
   // console.log(successSign);
@@ -26,12 +22,10 @@ const SignUp = () => {
   // console.log(error);
   // const idError = error.response.data.errorMessage;
   // // console.log(idError);
-  // const SignStatus = error.response.request.status;
-  // console.log(failSignStatus);
+  // const SignStatus = error.response.status;
+  // console.log(SignStatus);
   // const { isLoading, error } = useSelector((state) => state.signUpS);
 
-  // if (info.password.value !== info.confirm.value)
-  //   return alert('비밀번호 확인을 다시 해주세요!');
   // if (isLoading) {
   //   return <div>로딩중...</div>;
   // }
@@ -50,7 +44,7 @@ const SignUp = () => {
   const onAddBtn = (e) => {
     e.preventDefault();
     info.id === '' ? alert('아이디를 입력하세요!') : <></>;
-    if (info.nickname.length <= 2) {
+    if (info.nickname.length === 1 && info.nickname.length <= 3) {
       alert('닉네임이 너무 짧습니다');
       return;
     }
@@ -68,6 +62,13 @@ const SignUp = () => {
     }
 
     dispatch(__addBtn(info));
+    //   .then((response) => {
+    //   if (response) {
+    //     props.history.push('/Login');
+    //   } else {
+    //     alert('Error');
+    //   }
+    // });
     console.log(info);
     console.log(2);
 
@@ -113,7 +114,7 @@ const SignUp = () => {
           />
           {info.nickname.length === 0 ? (
             <div></div>
-          ) : info.nickname.length <= 3 || info.nickname.length >= 11 ? (
+          ) : info.nickname.length <= 2 || info.nickname.length >= 11 ? (
             <ErrorMessage>
               닉네임은 대,소문자 또는 숫자를 포함한 3자 이상 10글자 이하로
               적어주세요
@@ -130,7 +131,7 @@ const SignUp = () => {
           />
           {info.password.length === 0 ? (
             <div></div>
-          ) : info.password.includes(info.nickname) ? (
+          ) : info.password.replace(' ', '').includes(info.nickname) ? (
             <ErrorMessage>패스워드에 닉네임이 포함되어있습니다.</ErrorMessage>
           ) : info.password.length <= 3 || info.password.length >= 30 ? (
             <ErrorMessage>
@@ -147,7 +148,9 @@ const SignUp = () => {
             value={info.confirm}
             onChange={onChangeValue}
           />
-          {info.password !== info.confirm ? (
+          {info.password.length === 0 ? (
+            <div></div>
+          ) : info.password !== info.confirm ? (
             <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
           ) : (
             <div></div>

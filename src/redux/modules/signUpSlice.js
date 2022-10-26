@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 import { RandomsApi } from '../../tools/instance';
 
 //Thunk 함수
@@ -6,36 +7,34 @@ import { RandomsApi } from '../../tools/instance';
 export const __addBtn = createAsyncThunk(
   'addBtn',
   async (payload, thunkAPI) => {
-    console.log(payload);
-    const { data } = await RandomsApi.postSignUps(payload);
-    console.log(data);
-    // .then((res) => console.log(res))
-    // .catch((err) => console.log(err));
-
-    // // const { data } = await axios.post(url, payload)
-
     try {
+      console.log(payload);
+      const { data } = await RandomsApi.postSignUps(payload);
+      console.log(data);
+
+      // .then((res) => console.log(res))
+      // .catch((err) => console.log(err));
+
+      // // const { data } = await axios.post(url, payload)
+
       // const data = RandomsApi.postSignUps(payload);
 
       return thunkAPI.fulfillWithValue(data);
-    } catch (res) {
-      return thunkAPI.rejectWithValue(res);
-      //   console.log(res);
-      //   // if (res.data.code === 200) {
-      //   //   alert(res.data.message);
-      //   // } else if (res.data.coe === 412) {
-      //   //   alert(res.data.errorMessage);
-      //   // }
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
+
+export const __checkBtn = createAsyncThunk();
 
 //initialState
 const initialState = {
   infos: [],
   isLoading: false,
   isSuccess: false,
-  error: null,
+  error: {},
 };
 
 //reducer
@@ -63,6 +62,11 @@ const signUpSlice = createSlice({
       state.isLoading = false;
       //Store에 있는 addtodo서버에서 가져온 infos를 넣어.
       state.infos = action.payload;
+
+      if (state.infos.ok === true) {
+        alert('회원가입 성공!');
+        window.location.href = '/';
+      }
     },
 
     [__addBtn.rejected]: (state, action) => {
@@ -71,6 +75,19 @@ const signUpSlice = createSlice({
       state.isLoading = false;
       //catch 된 error 객체를 state.error에 넣어.
       state.error = action.payload;
+      const statusCode = state.error.response.status;
+      const errorMsg = state.error.response.data.errorMessage;
+      console.log(errorMsg);
+      statusCode === 412 ? (
+        alert('회원가입 실패! 다시 한 번 확인해주세요!')
+      ) : (
+        <></>
+      );
+      statusCode === 412 && errorMsg === '중복된 닉네임입니다.' ? (
+        alert('중복된 닉네임입니다.')
+      ) : (
+        <></>
+      );
     },
   },
 });

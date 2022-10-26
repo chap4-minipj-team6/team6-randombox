@@ -1,8 +1,9 @@
 import axios from 'axios';
 const instance = axios.create({
   // baseURL: 'http://localhost:3001',
-  baseURL: 'http://13.125.213.146:3000',
+  // baseURL: 'http://15.165.15.206/',
   // baseURL: 'http://3.35.231.116/',
+  baseURL: 'http://15.165.15.206/',
 });
 
 export const RandomsApi = {
