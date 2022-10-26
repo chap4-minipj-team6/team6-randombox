@@ -88,6 +88,17 @@ const signUpSlice = createSlice({
       ) : (
         <></>
       );
+      statusCode === 412 && errorMsg === '패스워드가 일치하지 않습니다.' ? (
+        alert('패스워드가 일치하지 않습니다.')
+      ) : (
+        <></>
+      );
+      statusCode === 412 &&
+      errorMsg === '패스워드에 닉네임이 포함되어 있습니다.' ? (
+        alert('패스워드에 닉네임이 포함되어 있습니다.')
+      ) : (
+        <></>
+      );
     },
   },
 });
