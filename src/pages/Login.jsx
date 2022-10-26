@@ -19,11 +19,16 @@ const Login = () => {
     RandomsApi.login({
       id: formRef.current.id.value,
       password: formRef.current.password.value,
-    }).then((res) => {
-      setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
-      alert(res.data.message);
-      navigate('/Mainpage');
-    });
+    })
+      .then((res) => {
+        setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
+        alert(res.data.message);
+        navigate('/Mainpage');
+      })
+      .catch((error) => {
+        //console.log(error.response.data.errorMessage);
+        alert(error.response.data.errorMessage);
+      });
   };
 
   return (

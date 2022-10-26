@@ -29,8 +29,7 @@ const ItemList = () => {
   return (
     <StItemList>
       {items?.map((item) => {
-        console.log(item);
-        return <Item key={item.id} itemData={item.randomItem} />;
+        return <Item key={item.id} itemData={item} />;
       })}
     </StItemList>
   );

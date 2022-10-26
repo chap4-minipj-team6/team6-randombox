@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import jwt_decode from 'jwt-decode';
-import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import { RandomsApi } from '../tools/instance';
@@ -11,8 +10,11 @@ const Mainpage = () => {
   const [tokens, setTokens] = useCookies(['token']);
   const accesstoken = jwt_decode(tokens.token);
   const userId = accesstoken.userID;
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    //window.location.replace('/Mainpage');
+  }, []);
 
   const openbox = () => {
     window.confirm('상품을 획득했습니다! \n마이페이지에서 확인하세요.');

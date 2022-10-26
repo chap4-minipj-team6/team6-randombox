@@ -10,29 +10,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSuccess = useSelector((state) => state.signUpS.isSuccess);
-  console.log(isSuccess);
 
-  // const successSign = error?.request;
-  // console.log(successSign);
-  // console.log(error);
-
-  // const SignStatus = res.request.status;
-  // const idError = res.data.errorMessage;
-  // // console.log(successData);
-  // console.log(error);
-  // const idError = error.response.data.errorMessage;
-  // // console.log(idError);
-  // const SignStatus = error.response.status;
-  // console.log(SignStatus);
-  // const { isLoading, error } = useSelector((state) => state.signUpS);
-
-  // if (isLoading) {
-  //   return <div>로딩중...</div>;
-  // }
-  // if (error) return <div>오류가 발생했습니다</div>;
-  // console.log(info.id.length);
-
-  // console.log(info);
   const [info, onChangeValue, reset] = useInput({
     id: '',
     nickname: '',
@@ -62,25 +40,9 @@ const SignUp = () => {
     }
 
     dispatch(__addBtn(info));
-    //   .then((response) => {
-    //   if (response) {
-    //     props.history.push('/Login');
-    //   } else {
-    //     alert('Error');
-    //   }
-    // });
-    console.log(info);
-    console.log(2);
 
     reset();
   };
-  //error도 하나의 객체.
-  // if (SignStatus === 200) {
-  //   alert(${idError});
-  //   return navigate('/Login');
-  // } else if (SignStatus === 412) {
-  //   alert(${idError});
-  // }
 
   return (
     <SignUpBox>
@@ -176,32 +138,18 @@ const SignUp = () => {
             value={info.address}
             onChange={onChangeValue}
           />
-          {/* {error} */}
+
           <SavePoint>
             소유한 포인트 : <span>0000</span>
           </SavePoint>
         </SignUpSet>
-        <Button
-        // onClick={() => {
-        //   navigate('/Login');
-        // }}
-        >
-          가입완료
-        </Button>
+        <Button>가입완료</Button>
       </Form>
     </SignUpBox>
   );
 };
 
 export default SignUp;
-
-// const SignWrap = styled.div`
-//   width: 500px;
-//   height: 700px;
-//   padding: 10px;
-//   border: 1px solid black;
-
-// `;
 
 //유효성검사
 const ErrorMessage = styled.div`
@@ -265,23 +213,3 @@ const SavePoint = styled.div`
   width: inherit;
   margin-top: 10px;
 `;
-
-// const Button = styled.button`
-//   width: inherit;
-//   border: 1px solid black;
-//   border-radius: 5px;
-
-//   margin: 0 auto;
-
-//   padding: 8px;
-//   border: 1px solid #ffd372;
-//   background-color: #ffd372;
-// `;
-
-// const BgBox = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-//   z-index: -100;
-//   background-color: rgba(0, 0, 0, 0.2);
-// `;

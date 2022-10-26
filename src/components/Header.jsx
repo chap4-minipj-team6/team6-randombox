@@ -8,7 +8,7 @@ import { RandomsApi } from '../tools/instance';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [tokens, setTokens] = useCookies(['token']);
+  const [tokens, setTokens, removeCookie] = useCookies(['token']);
   const accesstoken = jwt_decode(tokens.token);
   const userId = accesstoken.userId;
   const [users, setUsers] = useState([]);
@@ -26,11 +26,17 @@ const Header = () => {
         <Gnb>
           <Username>닉네임: {users.nickname}</Username>
           <Point>
-            <P>
-              잔여포인트 : <span>{users.point}</span>P
-            </P>
+            <P>잔여포인트 : {users.point}</P>
           </Point>
         </Gnb>
+        <Stbutton
+          onClick={() => {
+            removeCookie('token');
+            navigate('/');
+          }}
+        >
+          로그아웃
+        </Stbutton>
       </GnbBox>
       <Nav>
         <MenuWrap>
@@ -80,6 +86,20 @@ const Header = () => {
 export default Header;
 
 //헤더
+
+const Stbutton = styled.div`
+  font-family: 'MonoplexKR-Regular';
+  float: left;
+  width: 90px;
+  margin-left: 11%;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 #fcd19c;
+  cursor: pointer;
+  &:hover {
+    font-weight: 900;
+  }
+`;
 const HeaderWrap = styled.div`
   width: inherit;
 `;
@@ -96,7 +116,7 @@ const GnbBox = styled.div`
 
 const Gnb = styled.div`
   float: right;
-  width: 300px;
+  width: 40%;
 
   display: flex;
   flex-direction: row;
@@ -127,17 +147,22 @@ const Nav = styled.div`
 `;
 
 const Username = styled.div`
-  margin-right: 5%;
+  //margin-right: 5%;
+  width: 100%;
+  font-family: 'MonoplexKR-Regular';
 `;
 
 const Point = styled.div`
-  float: right;
-  width: 150px;
+  //float: right;
+  width: 100%;
   display: flex;
 `;
 
 const P = styled.div`
-  text-align: right;
+  //text-align: right;
+  font-family: 'MonoplexKR-Regular';
+
+  width: 100%;
 `;
 const MenuBox = styled.div`
   float: right;

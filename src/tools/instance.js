@@ -6,8 +6,8 @@ const accesstoken = token && jwt_decode(token);
 const id = accesstoken.userId;
 
 const instance = axios.create({
-  //baseURL: 'http://3.35.231.116/',
-  baseURL: 'http://15.165.15.206/',
+  baseURL: 'http://ws-study.shop:3000',
+  //baseURL: 'http://15.165.15.206/',
   headers: {
     Authorization: `Bearer ${token}`,
   },
@@ -19,7 +19,7 @@ export const RandomsApi = {
   mypage: (payload) => instance.get(`/mypages/${id}`),
   personal: (payload) => instance.put(`/mypages/${id}/edit`, payload),
   item: (payload) => instance.get(`/mypages/goods/${id}`),
-  itemdelete: (payload) => instance.delete(`/mypages/${id}/goodsId`),
+  itemdelete: (payload) => instance.delete(`/mypages/${id}/:goodsId`),
   header: (payload) => instance.get(`/mypages/main/${id}`),
   boxopen: (payload) => instance.post('/mypages', payload),
 };
