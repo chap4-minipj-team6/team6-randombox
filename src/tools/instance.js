@@ -6,8 +6,7 @@ const accesstoken = token && jwt_decode(token);
 const id = accesstoken.userId;
 
 const instance = axios.create({
-  baseURL: 'http://ws-study.shop:3000/',
-  // baseURL: 'http://15.165.15.206/',
+  baseURL: 'https://ws-study.shop/',
   headers: {
     Authorization: `Bearer ${token}`,
   },
