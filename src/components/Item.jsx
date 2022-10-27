@@ -52,7 +52,9 @@ const ItemList = ({ itemData }) => {
 
   return (
     <StItem>
+      <div>{itemData.randomItem.imageUrl}</div>
       <div>{itemData.randomItem.name}</div>
+      <div>{itemData.randomItem.goodsDetail}</div>
       <StButton>
         <Button size="md" onClick={() => alert('배송을 시작하겠습니다.')}>
           배송하기
