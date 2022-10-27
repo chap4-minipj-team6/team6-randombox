@@ -27,7 +27,9 @@ const StButton = styled.button`
     transform: scale(0.95);
   }
   &:hover {
+    color: white;
     cursor: pointer;
+    scale: 95%;
   }
 
   &:focus {
@@ -47,6 +49,9 @@ const StButton = styled.button`
           width: 200px;
           height: 50px;
           background-color: #646464;
+          &:hover {
+            color: white;
+          }
         `;
       case 'md':
         return css`

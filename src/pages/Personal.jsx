@@ -21,12 +21,41 @@ const Personal = () => {
   };
   const [personal, setPersonal] = useState(initialState);
 
+  console.log(personal);
+
   const onPersonalHandler = (e) => {
-    RandomsApi.personal().then((res) => {
-      setData(res.data);
-      alert(res.data.message);
-      setPersonal(initialState);
-    });
+    personal.id === '' ? alert('아이디를 입력하세요!') : <></>;
+    if (personal.nickname.length === 1 && personal.nickname.length <= 3) {
+      alert('닉네임이 너무 짧습니다');
+      return;
+    }
+    if (
+      personal.id === '' ||
+      personal.nickname === '' ||
+      personal.password === '' ||
+      personal.confirm === '' ||
+      personal.address === '' ||
+      personal.email === ''
+    ) {
+      return alert('모든 항목을 입력해주세요');
+    } else {
+      console.log('클릭', personal);
+      RandomsApi.personal({
+        nickname: personal.nickname,
+        password: personal.password,
+        confirm: personal.confirm,
+        email: personal.email,
+        address: personal.address,
+      })
+        .then((res) => {
+          alert(res.data.message);
+          setPersonal(initialState);
+          navigate(-1);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
   };
 
   return (
@@ -55,6 +84,17 @@ const Personal = () => {
                   }}
                   placeholder="수정할 닉네임을 입력하세요."
                 ></Stinput>
+                {personal.nickname.length === 0 ? (
+                  <div></div>
+                ) : personal.nickname.length <= 2 ||
+                  personal.nickname.length >= 11 ? (
+                  <ErrorMessage>
+                    닉네임은 대,소문자 또는 숫자를 포함한 3자 이상 10글자 이하로
+                    적어주세요
+                  </ErrorMessage>
+                ) : (
+                  <div></div>
+                )}
               </Stbox>
               <Stbox>
                 <p>비밀번호 </p>
@@ -68,6 +108,23 @@ const Personal = () => {
                   }}
                   placeholder="수정할 비밀번호를 입력하세요."
                 ></Stinput>
+                {personal.password.length === 0 ? (
+                  <div></div>
+                ) : personal.password
+                    .replace(' ', '')
+                    .includes(personal.nickname) ? (
+                  <ErrorMessage>
+                    패스워드에 닉네임이 포함되어있습니다.
+                  </ErrorMessage>
+                ) : personal.password.length <= 3 ||
+                  personal.password.length >= 30 ? (
+                  <ErrorMessage>
+                    비밀번호는 대,소문자 또는 숫자를 포함한 4자 이상 30글자
+                    이하로 적어주세요
+                  </ErrorMessage>
+                ) : (
+                  <></>
+                )}
               </Stbox>
               <Stbox>
                 <p>비밀번호 확인 </p>
@@ -81,6 +138,13 @@ const Personal = () => {
                   }}
                   placeholder="비밀번호를 다시 한번 입력해주세요."
                 ></Stinput>
+                {personal.password.length === 0 ? (
+                  <div></div>
+                ) : personal.password !== personal.confirm ? (
+                  <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
+                ) : (
+                  <div></div>
+                )}
               </Stbox>
               <Stbox>
                 <p>이메일 </p>
@@ -94,6 +158,16 @@ const Personal = () => {
                   }}
                   placeholder="수정할 이메일을 입력하세요."
                 ></Stinput>
+                {personal.email.length === 0 ? (
+                  <div></div>
+                ) : !personal.email.includes('@') ||
+                  !personal.email.includes('.') ? (
+                  <ErrorMessage>
+                    @를 포함한 정상적인 이메일을 써주세요.
+                  </ErrorMessage>
+                ) : (
+                  <div></div>
+                )}
               </Stbox>
               <Stbox>
                 <p>주소 </p>
@@ -177,6 +251,7 @@ const Stinput = styled.input`
   margin: 0px 0 20px 0;
   width: 100%;
   min-width: 300px;
+  font-family: 'MonoplexKR-Regular';
 `;
 
 const Stxbutton = styled.div`
@@ -184,4 +259,9 @@ const Stxbutton = styled.div`
   display: flex;
   margin-left: 340px;
   cursor: pointer;
+`;
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  font-family: 'MonoplexKR-Regular';
 `;

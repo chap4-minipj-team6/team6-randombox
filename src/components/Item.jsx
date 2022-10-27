@@ -6,27 +6,34 @@ import { useNavigate } from 'react-router-dom';
 import { __deleteItems } from '../redux/modules/itemSlice';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { useCookies } from 'react-cookie';
 
 const ItemList = ({ itemData }) => {
-  const token = document.cookie.replace('token=', '');
-  const accesstoken = token && jwt_decode(token);
-  const id = accesstoken.userId;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [tokens, setTokens] = useCookies(['token']);
+  const accesstoken = jwt_decode(tokens.token);
+  const token = document.cookie.replace('token=', '');
+  const userId = accesstoken.userId;
 
   const onDeleteHandler = () => {
     console.log('삭제할거야');
     const boxid = itemData.boxId;
+    console.log(boxid);
 
     axios
-      .delete(`http://15.165.15.206/mypages/${boxid}`, {
+      .delete(`http://ws-study.shop:3000/mypages/${boxid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then(function (response) {
-        console.log(response);
+        // response.boxID.filter(
+        //         (content) => content.id === action.payload
+        window.location.replace(`/MyPage/${userId}`);
         alert('삭제되었습니다');
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -50,7 +57,7 @@ const ItemList = ({ itemData }) => {
         <Button size="md" onClick={() => alert('배송을 시작하겠습니다.')}>
           배송하기
         </Button>
-        <Button size="md" onClick={() => onDeleteHandler()}>
+        <Button size="md" onClick={onDeleteHandler}>
           버리기
         </Button>
       </StButton>
