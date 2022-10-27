@@ -60,7 +60,7 @@ const StButton = styled.button`
         `;
       case 'sm':
         return css`
-          width: 30px;
+          width: 60px;
           height: 30px;
         `;
       default:

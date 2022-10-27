@@ -50,24 +50,36 @@ const ItemList = ({ itemData }) => {
   //   return null;
   // }
 
+  const imgUrl = itemData.randomItem.imageUrl;
+
+  console.log(imgUrl);
   return (
     <StItem>
-      <div>{itemData.randomItem.imageUrl}</div>
-      <div>{itemData.randomItem.name}</div>
-      <div>{itemData.randomItem.goodsDetail}</div>
-      <StButton>
-        <Button size="md" onClick={() => alert('배송을 시작하겠습니다.')}>
+      <Stimg src={imgUrl} />
+      <Stdiv>{itemData.randomItem.name}</Stdiv>
+      <Stdiv>{itemData.randomItem.goodsDetail}</Stdiv>
+      <StButtons>
+        <StButton size="sm" onClick={() => alert('배송을 시작하겠습니다.')}>
           배송하기
-        </Button>
-        <Button size="md" onClick={onDeleteHandler}>
+        </StButton>
+        <StButton size="sm" onClick={onDeleteHandler}>
           버리기
-        </Button>
-      </StButton>
+        </StButton>
+      </StButtons>
     </StItem>
   );
 };
 
 export default ItemList;
+
+const Stdiv = styled.div`
+  text-align: left;
+`;
+const Stimg = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+`;
 
 const StItem = styled.div`
   width: 700px;
@@ -78,10 +90,40 @@ const StItem = styled.div`
   padding: 10px 10px 10px 30px;
   margin-bottom: 10px;
   align-items: center;
+  font-size: 12px;
+`;
+
+const StButtons = styled.div`
+  font-size: 10px;
+  width: 30%;
+  display: flex;
+  //justify-content: space-around;
+  flex-direction: row-reverse;
+  gap: 5px;
 `;
 
 const StButton = styled.div`
-  width: 320px;
+  border-radius: 20px;
+  border: none;
+  background-color: #ffcd29;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 5px 0 5px;
+  letter-spacing: 1px;
+  text-decoration-line: none;
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+  &:active {
+    transform: scale(0.95);
+  }
+  &:hover {
+    color: white;
+    cursor: pointer;
+    scale: 95%;
+  }
 `;
