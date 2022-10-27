@@ -50,7 +50,7 @@ const Header = () => {
             로그아웃
           </Homebutton>
           <MenuBox>
-            <Menu>
+            {/* <Menu>
               <div
                 onClick={() => {
                   navigate(`/Request`);
@@ -58,8 +58,8 @@ const Header = () => {
               >
                 상품요청
               </div>
-            </Menu>
-            <Menu>
+            </Menu> */}
+            {/* <Menu>
               <div
                 onClick={() => {
                   navigate(`/Review`);
@@ -67,7 +67,7 @@ const Header = () => {
               >
                 리뷰작성
               </div>
-            </Menu>
+            </Menu> */}
             <Menu>
               <div
                 onClick={() => {
