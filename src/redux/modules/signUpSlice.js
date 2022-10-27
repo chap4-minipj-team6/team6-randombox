@@ -8,9 +8,7 @@ export const __addBtn = createAsyncThunk(
   'addBtn',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const { data } = await RandomsApi.postSignUps(payload);
-      console.log(data);
 
       // .then((res) => console.log(res))
       // .catch((err) => console.log(err));
@@ -21,7 +19,6 @@ export const __addBtn = createAsyncThunk(
 
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -77,7 +74,6 @@ const signUpSlice = createSlice({
       state.error = action.payload;
       const statusCode = state.error.response.status;
       const errorMsg = state.error.response.data.errorMessage;
-      console.log(errorMsg);
       statusCode === 412 ? (
         alert('회원가입 실패! 다시 한 번 확인해주세요!')
       ) : (
