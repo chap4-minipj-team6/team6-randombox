@@ -23,7 +23,7 @@ const ItemList = ({ itemData }) => {
     console.log(boxid);
 
     axios
-      .delete(`http://ws-study.shop:3000/mypages/${boxid}`, {
+      .delete(`https://yd-light.shop/mypages/${boxid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
