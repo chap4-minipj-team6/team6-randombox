@@ -24,8 +24,6 @@ export const __addBtn = createAsyncThunk(
   }
 );
 
-export const __checkBtn = createAsyncThunk();
-
 //initialState
 const initialState = {
   infos: [],
