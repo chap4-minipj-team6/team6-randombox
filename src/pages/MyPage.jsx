@@ -15,10 +15,17 @@ const MyPage = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    //window.location.reload(1);
+    //window.location.href;
     //window.location.replace(`/MyPage/${userId}`);
-    RandomsApi.mypage().then((res) => {
-      setUsers(res.data.data);
-    });
+    RandomsApi.mypage()
+      .then((res) => {
+        setUsers(res.data.data);
+        //window.location.reload(true);
+      })
+      .catch((error) => {
+        console.log('마이페이지 겟 에러', error);
+      });
   }, []);
 
   const Alert = () => {
@@ -65,14 +72,15 @@ const MyPage = () => {
 export default MyPage;
 
 const StBody = styled.div`
-  background: #f6f5f7;
+  background: #fbf3ee;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
   min-width: 800px;
-  margin: -20px 0 50px;
+  margin-top: 10px;
+  min-height: 1000px;
+  height: 100%;
   > h1 {
     font-weight: bold;
   }

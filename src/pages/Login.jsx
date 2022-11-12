@@ -19,11 +19,16 @@ const Login = () => {
     RandomsApi.login({
       id: formRef.current.id.value,
       password: formRef.current.password.value,
-    }).then((res) => {
-      setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
-      alert(res.data.message);
-      navigate('/Mainpage');
-    });
+    })
+      .then((res) => {
+        setTokens('token', res.data.token); // 쿠키(token이라는 이름의)에 토큰 저장
+        alert(res.data.message);
+        window.location.replace(`/Mainpage`);
+      })
+      .catch((error) => {
+        //console.log(error.response.data.errorMessage);
+        alert(error.response.data.errorMessage);
+      });
   };
 
   return (
@@ -37,7 +42,6 @@ const Login = () => {
                 <Stinput
                   placeholder="아이디를 입력하세요."
                   id="id"
-                  //name="id"
                   type="text"
                   minLength="1"
                   value={loginid}
@@ -48,9 +52,8 @@ const Login = () => {
                 <Stinput
                   placeholder="비밀번호를 입력하세요."
                   id="password"
-                  //name="password"
                   type="password"
-                  minLength="3"
+                  minLength="1"
                   value={loginpwd}
                   onChange={onChangePwd}
                 />
@@ -65,7 +68,7 @@ const Login = () => {
               <Button size="md">회원가입</Button>
             </Link>
           </BtContain>
-          <Link to="/passwordEdit" style={{ textDecoration: 'none' }}>
+          <Link to="/PasswordEdit" style={{ textDecoration: 'none' }}>
             <Stp> 비밀번호를 잊어버리셨나요?</Stp>
           </Link>
         </StWrap>

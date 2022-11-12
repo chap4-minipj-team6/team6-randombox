@@ -17,4 +17,5 @@ const PageLayout = styled.div`
   min-width: 400px;
   height: 100%;
   margin: auto;
+  background: #fbf3ee;
 `;
