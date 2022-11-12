@@ -5,6 +5,8 @@ const token = document.cookie.replace('token=', '');
 const accesstoken = token && jwt_decode(token);
 const id = accesstoken.userId;
 
+//instance 쓸 때는 headers값 안 넣어줘도 되지만,
+//axios로 따로 써줄 경우는 header 매번 넣어줘야 함.
 const instance = axios.create({
   baseURL: 'https://yd-light.shop',
   headers: {
